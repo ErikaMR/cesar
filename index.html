@@ -1,0 +1,115 @@
+<html>
+<head>
+	<title>Cifrado César</title>
+	<meta charset="uft-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">	
+</head>
+		<h1><b>Cifrado César </b></h1>
+		<p>Descripción: 
+		<br><br>
+		El cifrado cesar es un método de cifrado por transposición o desplazamiento. Su origen se remonta a la antigua Roma donde julio cesar lo utilizaba para hacer llegar sus órdenes a sus generales en batalla con el fin de que si el mensaje era interceptado por el enemigo este no pudiera leerlo. 
+		<br><br>
+		El cifrado funciona desplazando las letras según el numero clave por ejemplo, la letra A se cambiaría por la D si nuestra clave fuera 3, y la B pasaría a ser E y así sucesivamente.</p>
+		<br>
+  <body class="container">
+  			<form>
+  				<label>Inserta el alfabeto:</label>
+  				<br>
+  				<input class="form-control" type="text" size="25" maxlength=256 required/>
+  				<br>
+			  	<label>Inserta el texto a cifrar:</label>
+			  	<br>
+			  	<input class="form-control" type="text" size="25" maxlength=256 required/>
+			  	<br>
+			  	<label>Clave:</label>
+			  	<br>
+			  	<input class="form-control" type="number" size="256"/>
+			  	<br><br>
+			  	<button class="btn btn-primary" type="reset"> <b>Limpiar</b></button>
+			  	<br><br>
+		  	</form>
+			  	<button class="btn btn-primary" onclick="encriptar()" ><b>Encriptar</b></button>
+			  	<button class="btn btn-primary" onclick="desencriptar()" ><b>Desencriptar</b></button>
+			  	<br><br>
+		  	<label>Resultado:</label>
+		  	<p type="text" id="resultado" disabled></p>
+	    <script src="bundle.js"></script>
+
+	<script scr="app.js">
+		
+		function encriptar(){
+			var alfabeto = document.getElementsByTagName("input")[0].value; 
+			alfabeto = alfabeto.toUpperCase();
+			longalfabeto = alfabeto.length;
+			var cadena = document.getElementsByTagName("input")[1].value; 
+			cadena = cadena.toUpperCase();
+			var clave = document.getElementsByTagName("input")[2].value; 
+
+		   	var result = ""; //Cadena de salida vacía
+		    var permitido = true;
+		    	for (var i = 0; i < cadena.length; i++) {
+		    		var indice = null;
+		    		for (var x = 0; x < alfabeto.length; x++) {
+		    			if(alfabeto[x] == cadena[i]){
+		    				indice = x;
+		    				break;
+		    			}
+		    		}
+		    		if(indice == null){
+		    			permitido=false;
+		    		}
+		    		if(permitido){
+		    			valor = x+parseInt(clave);
+		    		if(valor+1>longalfabeto){
+			    		valor = valor - longalfabeto;
+			    	}
+		    			result += alfabeto[valor];
+		    		}
+		    	}
+		    	if(permitido){
+		    		document.getElementById('resultado').innerHTML = result; 
+		    	}else{
+		    		alert("Hay caracteres que no estan en el alfabeto!")
+		    	}
+		}
+
+		function desencriptar(elemento){
+			var alfabeto = document.getElementsByTagName("input")[0].value; 
+			alfabeto = alfabeto.toUpperCase();
+			longalfabeto = alfabeto.length;
+			var cadena = document.getElementsByTagName("input")[1].value; 
+			cadena = cadena.toUpperCase();
+			var clave = document.getElementsByTagName("input")[2].value; 
+
+		    var result = ""; //Cadena de salida vacía
+		    var permitido = true;
+		    	for (var i = 0; i < cadena.length; i++) {
+		    		var indice = null;
+		    		for (var x = 0; x < alfabeto.length; x++) {
+		    			if(alfabeto[x] == cadena[i]){
+		    				indice = x;
+		    				break;
+		    			}
+		    		}
+		    		if(indice == null){
+		    			permitido=false;
+		    		}
+		    		if(permitido){
+		    			valor = x-parseInt(clave);
+		    			if(valor< 0){
+			    			valor = valor + longalfabeto;
+			    		}
+		    				result += alfabeto[valor];
+		    			}
+		    	}
+		    	if(permitido){
+		    		document.getElementById('resultado').innerHTML = result; 
+
+		    	}else{
+		    		alert("¡Hay carácteres que NO están en el alfabeto!")
+		    	}
+		}
+
+	</script>
+  </body>
+</html>
